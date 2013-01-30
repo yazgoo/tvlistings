@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+load "./tvlistings.rb"
+options = {}
+name = nil
+ARGV.each do |arg|
+    if arg.start_with? "--"
+        name = arg.split("--")[1].gsub('-', '_').to_sym
+    else
+        if options[name].nil?
+            options[name] = arg
+        else
+            options[name] = [options[name]] if not options[name].kind_of? Array
+            options[name] << arg
+        end
+    end
+end
+TVListings.new(options).puts

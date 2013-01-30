@@ -1,0 +1,18 @@
+Sidereel made this cool tv listing:
+http://www.sidereel.com/_television/tvlistings
+TVListings aims to be able to search in it based on optional parameters:
+    - «date»: since only the current tv listings is available, it caches other 
+        from previous days
+    - «categories»:
+        "Children's", "Lifestyle", "Movie", "Music", "News", "Other", "Sports"
+    - «isNew»: is the show new 
+    - «channels»: using the channel short name
+A command line interface is available, here are some example uses:
+    Getting all Children and Other items airing on  2013, the first of january:
+        ./tvlistings --date 2013-01-31 --categories Other "Children's"
+    Getting all new items:
+        ./tvlistings --isNew true
+    Getting everything, using /tmp/blah/ as cache prefix:
+        ./tvlistings --cache_dir /tmp/blah/
+    Getting items airing on CW and ABC:
+        ./tvlistings --channels CW ABC
