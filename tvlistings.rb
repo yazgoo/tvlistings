@@ -13,6 +13,12 @@ class Array
     end
 end
 class TVListings
+    def available_dates
+        entries = Dir.entries(@cache_dir)
+        entries.delete "."
+        entries.delete ".."
+        entries
+    end
     def channel_matches channel, parameters
         parameters[:channels].nil? or parameters[:channels].include? channel["name"]
     end
@@ -21,15 +27,14 @@ class TVListings
             and (parameters[:categories].nil? or parameters[:categories].include? airing["category"])
     end
     def load_cached_listing parameters
-        cache_dir = parameters[:cache_dir].nil? ? "#{ENV["HOME"]}/.cache/tvlistings/" : parameters[:cache_dir]
-        FileUtils.mkdir_p cache_dir
-        file_path = "#{cache_dir}#{parameters[:date]}"
+        FileUtils.mkdir_p @cache_dir
+        file_path = "#{@cache_dir}#{parameters[:date]}"
         url = "http://www.sidereel.com/_television/tvlistings.json?time_zone=EST"
         file = File.exists?(file_path) ? open(file_path) : open(url, "UserAgent" => "tvlistings")
         contents = file.read
         listings = JSON.parse(contents)
         date = listings["globalStartTime"].split("T")[0]
-        file_path =  "#{cache_dir}#{date}"
+        file_path =  "#{@cache_dir}#{date}"
         File.new(file_path, "w").write contents if not File.exists? file_path
         file.close
         throw "could not find a listing for #{parameters[:date]}\
@@ -38,6 +43,7 @@ class TVListings
         @listings = listings
     end
     def initialize(parameters = {})
+        @cache_dir = (parameters[:cache_dir].nil? ? "#{ENV["HOME"]}/.cache/tvlistings/" : parameters[:cache_dir]) + "/"
         [:channels, :categories].each do |name|
             parameters[name] = [parameters[name]] if parameters[name].kind_of? String
         end
