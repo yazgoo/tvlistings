@@ -43,6 +43,7 @@ class TVListings
         @listings = listings
     end
     def initialize(parameters = {})
+        parameters = Hash[parameters.map{ |k, v| [k.to_sym, v] }]
         @cache_dir = (parameters[:cache_dir].nil? ? "#{ENV["HOME"]}/.cache/tvlistings/" : parameters[:cache_dir]) + "/"
         [:channels, :categories].each do |name|
             parameters[name] = [parameters[name]] if parameters[name].kind_of? String

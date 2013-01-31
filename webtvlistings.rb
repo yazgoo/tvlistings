@@ -13,6 +13,7 @@ module WebTVListings::Controllers
     end
     class Listings
         def post
+            p @input
             @result = TVListings.new(@input).get
             render :listings
         end
@@ -76,7 +77,8 @@ module WebTVListings::Views
                             tr do
                                 channel["airings"].each do |airing|
                                     td :style => "background-color: #ededef;" do
-                                        b do airing["title"] end
+                                        b do airing["title"] + " " end
+                                        a :style => "background-color: #da4973;" do :new end if airing["isNew"]
                                         div do airing["episodeTitle"] end
                                     end
                                 end
