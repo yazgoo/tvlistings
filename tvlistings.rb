@@ -3,7 +3,6 @@ require 'rubygems'
 require 'open-uri'
 require 'json'
 require 'fileutils'
-require 'awesome_print'
 class Array
     def select!
         values = []
