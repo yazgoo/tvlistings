@@ -53,6 +53,9 @@ class TVListings
             end
         end
     end
+    def get
+        @listings
+    end
     def puts
         @listings["channels"].each do |channel|
             channel["airings"].each do |airing|
