@@ -17,4 +17,4 @@ A command line interface is available, here are some example uses:
     Getting items airing on CW and ABC:
         ./tvlistings --channels CW ABC
 A web interface using camping is available.
-A demo is available at: http://web.gpisc.in/tvlistings
+A demo is available at http://web.gpisc.in/tvlistings
